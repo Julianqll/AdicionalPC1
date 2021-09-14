@@ -5,7 +5,7 @@ using namespace std;
 template <typename T>
 class LinkedList
 {
-  class Node
+   class Node
   { private:
       T       m_data;
       Node   *m_pNext;
@@ -25,6 +25,8 @@ class LinkedList
     // LinkedList() {}
     void    insert_at_head(T elem);
     void    insert_at_tail(T elem);
+    Node    *begin() ;              //Error
+    Node    *end() ;             
     T       PopHead();
     size_t  size()  const       { return m_size;       }
     bool    empty() const       { return size() == 0;  }
@@ -52,6 +54,12 @@ void LinkedList<T>::insert_at_tail(T elem)
     if(!m_pHead)
     { m_pHead = pNew;   }
     m_size++;
+}
+//----
+template <typename T>
+Node LinkedList<T>::begin()
+{
+  return *m_pHead;
 }
 
 template <typename T>
@@ -92,20 +100,20 @@ ostream &LinkedList<T>::print(ostream &os)
 }
 
 template <typename T>
-class iterator
+class Iterator
 {private:
     // using Node = typename LinkedList<T>::Node;
     typename LinkedList<T>::Node *m_pNode;
  public:
-    iterator(LinkedList<T>::Node *pNode) : m_pNode(pNode) {}
-    bool operator==(iterator &iter)       { return m_pNode == iter.m_pNode; }
-    bool operator!=(iterator &iter)       { return m_pNode != iter.m_pNode; }
-    T &operator*()                         { return *m_pNode->getData();      }
+    Iterator(typename LinkedList<T>::Node *pNode, T data) : m_pNode(pNode) {} //errro 1 typename
+    bool operator==(Iterator &iter)       { return m_pNode == iter.m_pNode; }
+    bool operator!=(Iterator &iter)       { return m_pNode != iter.m_pNode; }
+    T &operator*()                        { return *m_pNode->getData();     }
     void operator++();
 };
 
 template <typename T>
-void iterator<T>::operator++();
+void Iterator<T>::operator++()
 {
     m_pNode = m_pNode->getpNext();
 }
