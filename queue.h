@@ -22,14 +22,12 @@ class Queue
 
 template <typename T>
 Queue<T>::Queue()
-{
-
-}
+{}
 
 template <typename T>
 void Queue<T>::insert(T n)
 {
-    m_list.insert_at_tail(n);
+  m_list.insert_at_tail(n);
 }
 
 template <typename T>
@@ -40,7 +38,8 @@ T Queue<T>::pop()
 
 template <typename T>
 ostream &Queue<T>::print(ostream &os)
-{   return m_list.print(os);
+{   
+  return m_list.print(os); 
 }
 
 #endif
