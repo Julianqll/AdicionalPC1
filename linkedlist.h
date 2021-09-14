@@ -1,7 +1,7 @@
 #ifndef __LINKEDLIST_H__  // # es una DIRECTIVAs al PreCOMPILADOR
 #define __LINKEDLIST_H__ 
 using namespace std;
-
+#include <cassert>  
 template <typename T>
 class LinkedList
 {
@@ -31,6 +31,22 @@ class LinkedList
 
     ostream & print(ostream &os);
     T &operator[](size_t pos); //
+
+    class Iterator
+    {
+      private:
+        Node *m_pNode;
+    public:
+        Iterator(Node *pNode=nullptr) : m_pNode(pNode) {}
+        bool operator==(Iterator &iter)       { return m_pNode == iter.m_pNode; }
+        bool operator!=(Iterator &iter)       { return m_pNode != iter.m_pNode; }
+        T &operator*()                         { return m_pNode->getDataRef();    }
+        void operator++(){ m_pNode = m_pNode->getpNext();}
+    };
+
+    Iterator begin(){ return Iterator(m_pHead);}
+    Iterator end(){ return Iterator(nullptr);}
+    
 };
 
 template <typename T>
@@ -72,10 +88,14 @@ T LinkedList<T>::PopHead()
 template <typename T>
 T &LinkedList<T>::operator[](size_t pos)
 {
-  assert(pos <= size());
+  //assert(pos <= size());
   Node *pTmp = m_pHead;
-  for(auto i= 0 ; i < pos ; i++)
+  for(auto i= 0 ; i < pos ; i++){
+    if(pTmp == m_pTail){
+      break;
+    }
     pTmp = pTmp->getpNext();
+  }
   return pTmp->getDataRef();
 }
 
@@ -89,25 +109,6 @@ ostream &LinkedList<T>::print(ostream &os)
     pNode = pNode->getpNext();
   }
   return os;
-}
-
-template <typename T>
-class iterator
-{private:
-    // using Node = typename LinkedList<T>::Node;
-    typename LinkedList<T>::Node *m_pNode;
- public:
-    iterator(LinkedList<T>::Node *pNode) : m_pNode(pNode) {}
-    bool operator==(iterator &iter)       { return m_pNode == iter.m_pNode; }
-    bool operator!=(iterator &iter)       { return m_pNode != iter.m_pNode; }
-    T &operator*()                         { return *m_pNode->getData();      }
-    void operator++();
-};
-
-template <typename T>
-void iterator<T>::operator++();
-{
-    m_pNode = m_pNode->getpNext();
 }
 
 #endif
