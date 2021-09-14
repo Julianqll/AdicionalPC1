@@ -2,32 +2,50 @@
 #define __LINKEDLIST_H__ 
 using namespace std;
 
+
 template <typename T>
 class LinkedList
 {
-  class Node
-  { private:
-      T       m_data;
-      Node   *m_pNext;
+  public:
+
+    class Node
+    { private:
+        T       m_data;
+        Node   *m_pNext;
+      public:
+        Node(T data, Node *pNext = nullptr) : m_data(data), m_pNext(pNext)
+        {};
+        T         getData()                {   return m_data;    }
+        T        &getDataRef()             {   return m_data;    }
+        void      setpNext(Node *pNext)    {   m_pNext = pNext;  }
+        Node     *getpNext()               {   return m_pNext;   }
+        
+    };
+    class iterador
+    {
+      private:
+        // using Node = typename LinkedList<T>::Node;
+        Node *m_pNode;
     public:
-      Node(T data, Node *pNext = nullptr) : m_data(data), m_pNext(pNext)
-      {};
-      T         getData()                {   return m_data;    }
-      T        &getDataRef()             {   return m_data;    }
-      void      setpNext(Node *pNext)    {   m_pNext = pNext;  }
-      Node     *getpNext()               {   return m_pNext;   }
-  };
+        iterador(Node *pNode) : m_pNode(pNode) {}
+        bool operator==(iterador iter)       { return m_pNode == iter.m_pNode; }
+        bool operator!=(iterador iter)       { return m_pNode != iter.m_pNode; }
+        T &operator*()                     { return m_pNode->getDataRef();      }
+        void operator++(int)                     { m_pNode = m_pNode->getpNext();}
+    };
   private:
     Node    *m_pHead = nullptr, 
             *m_pTail = nullptr;
     size_t   m_size  = 0;
   public:
     // LinkedList() {}
-    void    insert_at_head(T elem);
-    void    insert_at_tail(T elem);
-    T       PopHead();
-    size_t  size()  const       { return m_size;       }
-    bool    empty() const       { return size() == 0;  }
+    void      insert_at_head(T elem);
+    void      insert_at_tail(T elem);
+    T         PopHead();
+    size_t    size()  const       { return m_size;       }
+    bool      empty() const       { return size() == 0;  }
+    iterador  begin() const       { return iterador(m_pHead); }
+    iterador  end()   const       { return iterador(m_pTail); }
 
     ostream & print(ostream &os);
     T &operator[](size_t pos); //
@@ -91,23 +109,6 @@ ostream &LinkedList<T>::print(ostream &os)
   return os;
 }
 
-template <typename T>
-class iterator
-{private:
-    // using Node = typename LinkedList<T>::Node;
-    typename LinkedList<T>::Node *m_pNode;
- public:
-    iterator(LinkedList<T>::Node *pNode) : m_pNode(pNode) {}
-    bool operator==(iterator &iter)       { return m_pNode == iter.m_pNode; }
-    bool operator!=(iterator &iter)       { return m_pNode != iter.m_pNode; }
-    T &operator*()                         { return *m_pNode->getData();      }
-    void operator++();
-};
 
-template <typename T>
-void iterator<T>::operator++();
-{
-    m_pNode = m_pNode->getpNext();
-}
 
 #endif

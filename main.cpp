@@ -13,6 +13,17 @@ int main()
 {
   TX vect[nElem] = {5,30,40, 7,80, 90, 3,25, 54,47, 
                   3, 6, 12, 8, 25, 27, 19, 83, 9, 0};
+  LinkedList<TX> lista;
+  for(auto i=0;i < nElem; i++)
+  {
+    lista.insert_at_head(vect[i]);
+  }
+  
+  
+  for(auto iter = lista.begin(); iter!=lista.end() ;iter++){
+      cout<<*iter<<endl;
+  }
+
   /*Queue<TX> queue;
   for(auto x=0; x<10; x++)
   {
@@ -33,7 +44,7 @@ int main()
   px = &x;
   *px += 20;
   cout << x << endl;*/
-
+/*
   int z = 5;
   LinkedList<TX> mylist;
   for(auto x=0; x<10; x++)
@@ -53,7 +64,7 @@ int main()
   {
       cout << *iter << endl;
   }
-
+*/
   /*while( !mylist.empty() )
   {   
       auto dato = mylist.PopHead();
@@ -61,7 +72,7 @@ int main()
       cout << mylist <<endl;
   }*/
 
-  try
+  /*try
   {
       auto dato = mylist.PopHead();
       cout << "abc" << endl;
@@ -83,8 +94,8 @@ int main()
       cout << "todo lo demas atrapada ... puedes continuar !!!" <<endl;
   }
   cout << "Finalizando el programa ..." << endl;
-  
-  char c = 'A';
+  */
+  //char c = 'A';
   /*Stack<T1> stack;
   Stack<T1> *pStack = new Stack<T1>;
 
