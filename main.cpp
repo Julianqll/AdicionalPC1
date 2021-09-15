@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "type.h"
 #include "stack.h"
 #include "queue.h"
@@ -20,7 +21,6 @@ int main()
     cout << queue << endl;
   }
   cout << endl;
-
   for(auto x=0; x<10; x++)
   {
       auto dato = queue.pop();
@@ -33,25 +33,27 @@ int main()
   px = &x;
   *px += 20;
   cout << x << endl;*/
-
+  vector<TX> v1;
   int z = 5;
   LinkedList<TX> mylist;
   for(auto x=0; x<10; x++)
   {   mylist.insert_at_tail(vect[x]);
-      cout << mylist << " ... " << z << "hola " <<endl;
+      cout << mylist<<"..." <<endl;
   }
   cout << endl;
-
+  cout <<"adding other elements" << endl;
+  cout << endl;
   for(auto x=10; x< nElem; x++)
   {   mylist.insert_at_head(vect[x]);
       cout << mylist << endl;
   }
-  myList[10000] = 14;
+  
+  mylist[10] = 14;
 
-  iterator<TX> iter = mylist.begin();
-  for(; iter != mylist.end() ; iter++)
+  LinkedList <TX> :: iterator iter= mylist.begin();
+  for(; iter != mylist.end() ; ++iter)
   {
-      cout << *iter << endl;
+      cout <<*iter << endl;
   }
 
   /*while( !mylist.empty() )
@@ -64,7 +66,7 @@ int main()
   try
   {
       auto dato = mylist.PopHead();
-      cout << "abc" << endl;
+      cout << "Funciona" << endl;
   }
   catch(int n) 
   {
@@ -87,7 +89,6 @@ int main()
   char c = 'A';
   /*Stack<T1> stack;
   Stack<T1> *pStack = new Stack<T1>;
-
   auto w = "hola";
   auto x = 0; 
   for( x = 0 ; x < nElem ; x++ )
