@@ -1,5 +1,6 @@
 #ifndef __LINKEDLIST_H__  // # es una DIRECTIVAs al PreCOMPILADOR
 #define __LINKEDLIST_H__ 
+#include <cassert>
 using namespace std;
 
 template <typename T>
@@ -31,6 +32,34 @@ class LinkedList
 
     ostream & print(ostream &os);
     T &operator[](size_t pos); //
+    
+    class iterator 
+    {private:
+        // using Node = typename LinkedList<T>::Node;
+        LinkedList<T> *m_pList;
+        LinkedList<T>::Node *m_pNode;
+    public:
+        iterator(LinkedList<T> *pList, LinkedList<T>::Node *pNode)
+              : m_pList(pList), m_pNode(pNode) {}
+        iterator(iterator &other) 
+              : m_pList(other.m_pList), m_pNode(other.m_pNode){}
+        iterator(iterator &&other) // Move constructor
+              { m_pList = std::move(other.m_pList); //other.m_pList = nullptr; 
+                m_pNode = std::move(other.m_pNode); //other.m_pNode = nullptr;
+              }
+        iterator operator=(iterator &iter);
+        bool operator==(iterator iter)   { return m_pNode == iter.m_pNode; }
+        bool operator!=(iterator iter)   { return m_pNode != iter.m_pNode; }
+        T &operator*()                   { return m_pNode->getDataRef();   }
+        iterator operator++();
+        iterator operator++(int );
+    };
+    iterator begin() { iterator iter(this, m_pHead);
+                      return iter;
+                     }
+    iterator end()   { iterator iter(this, nullptr);
+                        return iter;
+                      }
 };
 
 template <typename T>
@@ -90,24 +119,11 @@ ostream &LinkedList<T>::print(ostream &os)
   }
   return os;
 }
-
 template <typename T>
-class iterator
-{private:
-    // using Node = typename LinkedList<T>::Node;
-    typename LinkedList<T>::Node *m_pNode;
- public:
-    iterator(LinkedList<T>::Node *pNode) : m_pNode(pNode) {}
-    bool operator==(iterator &iter)       { return m_pNode == iter.m_pNode; }
-    bool operator!=(iterator &iter)       { return m_pNode != iter.m_pNode; }
-    T &operator*()                         { return *m_pNode->getData();      }
-    void operator++();
-};
-
-template <typename T>
-void iterator<T>::operator++();
+typename LinkedList<T>::iterator LinkedList<T>::iterator::operator++()
 {
     m_pNode = m_pNode->getpNext();
+    return *this;
 }
 
 #endif
